@@ -15,4 +15,13 @@ public class Student {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "surname")
+    private String surname;
+
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password")
+    private String password;
 }
