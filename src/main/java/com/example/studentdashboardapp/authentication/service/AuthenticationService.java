@@ -5,6 +5,7 @@ import com.example.studentdashboardapp.students.repository.StudentRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -37,7 +38,18 @@ public class AuthenticationService {
         return false;
     }
 
-    public Claims extractClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+    public Student getLoggedInStudent(String token) {
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(SECRET_KEY)
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            String username = claims.getSubject();
+
+            return studentRepository.findByUsername(username);
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid Token");
+        }
     }
 }

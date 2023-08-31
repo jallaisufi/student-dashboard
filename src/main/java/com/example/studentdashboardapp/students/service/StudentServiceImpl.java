@@ -14,12 +14,24 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student createStudent(Student student) {
-        return this.studentRepository.save(student);
+    public Student registerStudent(Student student) {
+        Student existingUsername = this.studentRepository.findByUsername(student.getUsername());
+        if (existingUsername == null) {
+            return this.studentRepository.save(student);
+        } else {
+            throw new RuntimeException("Username not available!");
+        }
     }
 
     @Override
     public Student findById(Long id) {
         return this.studentRepository.findById(id).get();
     }
+
+    @Override
+    public void deleteById(Long id) {
+        this.studentRepository.deleteById(id);
+    }
+
+
 }
