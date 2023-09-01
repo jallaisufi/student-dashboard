@@ -35,4 +35,9 @@ public class CourseController {
     public List<Course> findAll() {
         return this.courseService.findAll();
     }
+
+    @GetMapping("/university/{universityId}")
+    public List<Course> findAllByUniversityId(@PathVariable("universityId") Long universityId) {
+        return this.courseService.findAllByUniversityId(universityId);
+    }
 }

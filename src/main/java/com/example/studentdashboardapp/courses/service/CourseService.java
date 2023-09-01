@@ -13,4 +13,6 @@ public interface CourseService {
     void deleteById(Long id);
 
     List<Course> findAll();
+
+    List<Course> findAllByUniversityId(Long universityId);
 }

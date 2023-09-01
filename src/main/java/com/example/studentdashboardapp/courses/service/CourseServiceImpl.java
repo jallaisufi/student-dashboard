@@ -40,4 +40,9 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> findAll() {
         return this.courseRepository.findAll();
     }
+
+    @Override
+    public List<Course> findAllByUniversityId(Long universityId) {
+        return this.courseRepository.findAllByUniversityId(universityId);
+    }
 }
