@@ -3,8 +3,6 @@ package com.example.studentdashboardapp.universities.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.naming.Name;
-
 @Entity
 @Table(name = "universities")
 @Data
