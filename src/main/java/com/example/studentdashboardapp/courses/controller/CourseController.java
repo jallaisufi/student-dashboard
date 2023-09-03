@@ -2,8 +2,11 @@ package com.example.studentdashboardapp.courses.controller;
 
 import com.example.studentdashboardapp.courses.model.Course;
 import com.example.studentdashboardapp.courses.service.CourseService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.ValidationException;
 import java.util.List;
 
 @RestController

@@ -2,9 +2,12 @@ package com.example.studentdashboardapp.authentication.controller;
 
 import com.example.studentdashboardapp.authentication.model.LoginRequest;
 import com.example.studentdashboardapp.authentication.service.AuthenticationService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 
 @RestController
 public class AuthenticationController {
@@ -16,16 +19,16 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();
 
         if (authenticationService.authenticateStudent(username, password)) {
             String token = authenticationService.generateToken(username);
-            return token;
+            return ResponseEntity.ok(token);
         }
 
-        return "Invalid credentials";
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
     }
 
 }
