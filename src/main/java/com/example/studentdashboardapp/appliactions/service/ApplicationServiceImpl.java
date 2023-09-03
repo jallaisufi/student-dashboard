@@ -52,8 +52,13 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public List<Application> findByStudentId(Long studentId) {
-        return this.applicationRepository.findByStudentId(studentId);
+    public List<Application> findByStudentId(String token) {
+        Student loggedInStudent = this.authenticationService.getLoggedInStudent(token);
+        if (loggedInStudent != null) {
+            return this.applicationRepository.findByStudentId(loggedInStudent.getId());
+        } else {
+            return null;
+        }
     }
 
     @Override

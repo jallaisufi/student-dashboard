@@ -9,7 +9,7 @@ public interface ApplicationService {
 
     Application sendApplication(Long courseId, Long univeristyid, String token);
 
-    List<Application> findByStudentId(Long studentId);
+    List<Application> findByStudentId(String token);
 
     Application findById(Long id);
 

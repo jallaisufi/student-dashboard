@@ -22,9 +22,9 @@ public class ApplicationController {
         return this.applicationService.sendApplication(dto.getCourseId(), dto.getUniversityId(), dto.getToken());
     }
 
-    @GetMapping("/student/{studentId}")
-    public List<Application> findAllApplicationsByStudentId(@PathVariable("studentId") Long studentId) {
-        return this.applicationService.findByStudentId(studentId);
+    @GetMapping("/student")
+    public List<Application> findAllApplicationsByStudentId(@RequestBody String token) {
+        return this.applicationService.findByStudentId(token);
     }
 
     @GetMapping("/{id}")
