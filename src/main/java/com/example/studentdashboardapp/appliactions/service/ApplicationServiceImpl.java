@@ -9,6 +9,8 @@ import com.example.studentdashboardapp.courses.repository.CourseRepository;
 import com.example.studentdashboardapp.students.model.Student;
 import com.example.studentdashboardapp.universities.model.University;
 import com.example.studentdashboardapp.universities.repository.UniversityRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -31,7 +33,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public Application sendApplication(Long courseId, Long univeristyId, String token) {
+    public ResponseEntity<?> sendApplication(Long courseId, Long univeristyId, String token) {
         Student loggedInStudent = this.authenticationService.getLoggedInStudent(token);
         Long maxApplicationNumber = this.applicationRepository.findMaxApplicationNumber();
         Optional<Course> selectedCourse = this.courseRepository.findById(courseId);
@@ -45,9 +47,9 @@ public class ApplicationServiceImpl implements ApplicationService {
             application.setApplicationDate(LocalDate.now());
             application.setApplicationNumber(maxApplicationNumber != null ? (maxApplicationNumber + 1) : 1);
 
-            return this.applicationRepository.save(application);
+            return ResponseEntity.ok(this.applicationRepository.save(application));
         } else {
-            return null;
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Select both university and course");
         }
     }
 
@@ -64,11 +66,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public Application findById(Long id) {
         Optional<Application> optionalApplication = this.applicationRepository.findById(id);
-        if (optionalApplication.isPresent()) {
-            return optionalApplication.get();
-        } else {
-            return null;
-        }
+        return optionalApplication.orElse(null);
     }
 
     @Override

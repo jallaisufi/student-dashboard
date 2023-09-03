@@ -17,6 +17,10 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public ResponseEntity<?> registerStudent(Student student) {
+        if (student == null || student.getUsername().isEmpty() || student.getPassword().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request: User credentials are not completed");
+        }
+
         Student existingUsername = this.studentRepository.findByUsername(student.getUsername());
         if (existingUsername == null) {
             return ResponseEntity.ok(this.studentRepository.save(student));
@@ -34,6 +38,4 @@ public class StudentServiceImpl implements StudentService {
     public void deleteById(Long id) {
         this.studentRepository.deleteById(id);
     }
-
-
 }

@@ -3,6 +3,7 @@ package com.example.studentdashboardapp.appliactions.controller;
 import com.example.studentdashboardapp.appliactions.model.Application;
 import com.example.studentdashboardapp.appliactions.model.SendApplicationDTO;
 import com.example.studentdashboardapp.appliactions.service.ApplicationService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class ApplicationController {
     }
 
     @PostMapping()
-    public Application sendApplication(@RequestBody SendApplicationDTO dto) {
+    public ResponseEntity<?> sendApplication(@RequestBody SendApplicationDTO dto) {
         return this.applicationService.sendApplication(dto.getCourseId(), dto.getUniversityId(), dto.getToken());
     }
 
