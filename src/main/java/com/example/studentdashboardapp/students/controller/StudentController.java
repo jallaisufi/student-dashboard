@@ -2,6 +2,7 @@ package com.example.studentdashboardapp.students.controller;
 
 import com.example.studentdashboardapp.students.model.Student;
 import com.example.studentdashboardapp.students.service.StudentService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,7 +16,7 @@ public class StudentController {
     }
 
     @PostMapping()
-    public Student registerdStudent(@RequestBody Student student) {
+    public ResponseEntity<?> registerdStudent(@RequestBody Student student) {
         return this.studentService.registerStudent(student);
     }
 

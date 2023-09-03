@@ -2,6 +2,8 @@ package com.example.studentdashboardapp.students.service;
 
 import com.example.studentdashboardapp.students.model.Student;
 import com.example.studentdashboardapp.students.repository.StudentRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,12 +16,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student registerStudent(Student student) {
+    public ResponseEntity<?> registerStudent(Student student) {
         Student existingUsername = this.studentRepository.findByUsername(student.getUsername());
         if (existingUsername == null) {
-            return this.studentRepository.save(student);
+            return ResponseEntity.ok(this.studentRepository.save(student));
         } else {
-            throw new RuntimeException("Username not available!");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username not available");
         }
     }
 
