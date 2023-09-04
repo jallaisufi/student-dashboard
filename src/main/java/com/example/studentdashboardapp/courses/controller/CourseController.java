@@ -1,12 +1,11 @@
 package com.example.studentdashboardapp.courses.controller;
 
+import com.example.studentdashboardapp.appliactions.model.Application;
 import com.example.studentdashboardapp.courses.model.Course;
 import com.example.studentdashboardapp.courses.service.CourseService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.bind.ValidationException;
 import java.util.List;
 
 @RestController
@@ -20,12 +19,12 @@ public class CourseController {
     }
 
     @PostMapping()
-    public Course createCourse(@RequestBody Course course) {
+    public ResponseEntity<Course> createCourse(@RequestBody Course course) {
         return this.courseService.createCourse(course);
     }
 
     @GetMapping("/{id}")
-    public Course findById(@PathVariable("id") Long id) {
+    public ResponseEntity<Course> findById(@PathVariable("id") Long id) {
         return this.courseService.findById(id);
     }
 
@@ -35,12 +34,12 @@ public class CourseController {
     }
 
     @GetMapping()
-    public List<Course> findAll() {
+    public ResponseEntity<List<Course>> findAll() {
         return this.courseService.findAll();
     }
 
     @GetMapping("/university/{universityId}")
-    public List<Course> findAllByUniversityId(@PathVariable("universityId") Long universityId) {
-        return this.courseService.findAllByUniversityId(universityId);
+    public ResponseEntity<?> findAllByUniversityId(@RequestHeader String token, @PathVariable("universityId") Long universityId) {
+        return this.courseService.findAllByUniversityId(token, universityId);
     }
 }

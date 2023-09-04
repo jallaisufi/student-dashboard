@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,24 +53,24 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public List<Application> findByStudentId(String token) {
+    public ResponseEntity<?> findByStudentId(String token) {
         Student loggedInStudent = this.authenticationService.getLoggedInStudent(token);
         if (loggedInStudent != null) {
-            return this.applicationRepository.findByStudentId(loggedInStudent.getId());
+            return ResponseEntity.ok(this.applicationRepository.findByStudentId(loggedInStudent.getId()));
         } else {
-            return null;
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token not valid");
         }
     }
 
     @Override
-    public Application findById(Long id) {
+    public ResponseEntity<Application> findById(Long id) {
         Optional<Application> optionalApplication = this.applicationRepository.findById(id);
-        return optionalApplication.orElse(null);
+        return ResponseEntity.ok(optionalApplication.orElse(null));
     }
 
     @Override
-    public Application updateApplication(Application application) {
-        return this.applicationRepository.save(application);
+    public ResponseEntity<Application> updateApplication(Application application) {
+        return ResponseEntity.ok(this.applicationRepository.save(application));
     }
 
     @Override

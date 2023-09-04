@@ -10,6 +10,8 @@ import java.util.List;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
-    @Query("from Course c where c.university.id = :universityId")
+    @Query(" from Course c " +
+            "left join Application a on a.course.id = c.id " +
+            "where c.university.id = :universityId and a.id is null")
     List<Course> findAllByUniversityId(@Param("universityId") Long universityId);
 }

@@ -6,8 +6,6 @@ import com.example.studentdashboardapp.appliactions.service.ApplicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/applications")
 public class ApplicationController {
@@ -19,22 +17,22 @@ public class ApplicationController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> sendApplication(@RequestBody SendApplicationDTO dto) {
-        return this.applicationService.sendApplication(dto.getCourseId(), dto.getUniversityId(), dto.getToken());
+    public ResponseEntity<?> sendApplication(@RequestHeader String token, @RequestBody SendApplicationDTO dto) {
+        return this.applicationService.sendApplication(dto.getCourseId(), dto.getUniversityId(), token);
     }
 
     @GetMapping("/student")
-    public List<Application> findAllApplicationsByStudentId(@RequestBody String token) {
+    public ResponseEntity<?> findAllApplicationsByStudentId(@RequestHeader String token) {
         return this.applicationService.findByStudentId(token);
     }
 
     @GetMapping("/{id}")
-    public Application findById(@PathVariable("id") Long id) {
+    public ResponseEntity<Application> findById(@PathVariable("id") Long id) {
         return this.applicationService.findById(id);
     }
 
     @PutMapping
-    public Application updateApplication(@RequestBody Application application) {
+    public ResponseEntity<Application> updateApplication(@RequestBody Application application) {
         return this.applicationService.updateApplication(application);
     }
 

@@ -1,7 +1,11 @@
 package com.example.studentdashboardapp.courses.service;
 
+import com.example.studentdashboardapp.authentication.service.AuthenticationService;
 import com.example.studentdashboardapp.courses.model.Course;
 import com.example.studentdashboardapp.courses.repository.CourseRepository;
+import com.example.studentdashboardapp.students.model.Student;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,24 +15,22 @@ import java.util.Optional;
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
+    private final AuthenticationService authenticationService;
 
-    public CourseServiceImpl(CourseRepository courseRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, AuthenticationService authenticationService) {
         this.courseRepository = courseRepository;
+        this.authenticationService = authenticationService;
     }
 
     @Override
-    public Course createCourse(Course course) {
-        return this.courseRepository.save(course);
+    public ResponseEntity<Course> createCourse(Course course) {
+        return ResponseEntity.ok(this.courseRepository.save(course));
     }
 
     @Override
-    public Course findById(Long id) {
+    public ResponseEntity<Course> findById(Long id) {
         Optional<Course> courseOptional = this.courseRepository.findById(id);
-        if (courseOptional.isPresent()) {
-            return courseOptional.get();
-        } else {
-            return null;
-        }
+        return ResponseEntity.ok(courseOptional.orElse(null));
     }
 
     @Override
@@ -37,12 +39,17 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> findAll() {
-        return this.courseRepository.findAll();
+    public ResponseEntity<List<Course>> findAll() {
+        return ResponseEntity.ok(this.courseRepository.findAll());
     }
 
     @Override
-    public List<Course> findAllByUniversityId(Long universityId) {
-        return this.courseRepository.findAllByUniversityId(universityId);
+    public ResponseEntity<?> findAllByUniversityId(String token, Long universityId) {
+        Student loggedInStudent = this.authenticationService.getLoggedInStudent(token);
+        if (loggedInStudent != null) {
+            return ResponseEntity.ok(this.courseRepository.findAllByUniversityId(universityId));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token not valid");
+        }
     }
 }

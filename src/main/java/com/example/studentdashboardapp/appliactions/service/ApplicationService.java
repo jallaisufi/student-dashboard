@@ -10,11 +10,11 @@ public interface ApplicationService {
 
     ResponseEntity<?> sendApplication(Long courseId, Long univeristyid, String token);
 
-    List<Application> findByStudentId(String token);
+    ResponseEntity<?> findByStudentId(String token);
 
-    Application findById(Long id);
+    ResponseEntity<Application> findById(Long id);
 
-    Application updateApplication(Application application);
+    ResponseEntity<Application> updateApplication(Application application);
 
     void deleteById(Long id);
 }

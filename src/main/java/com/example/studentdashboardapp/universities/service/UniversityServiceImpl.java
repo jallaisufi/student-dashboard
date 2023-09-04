@@ -2,6 +2,7 @@ package com.example.studentdashboardapp.universities.service;
 
 import com.example.studentdashboardapp.universities.model.University;
 import com.example.studentdashboardapp.universities.repository.UniversityRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,18 +18,14 @@ public class UniversityServiceImpl implements UniversityService {
     }
 
     @Override
-    public University createUniversity(University university) {
-        return this.universityRepository.save(university);
+    public ResponseEntity<University> createUniversity(University university) {
+        return ResponseEntity.ok(this.universityRepository.save(university));
     }
 
     @Override
-    public University findById(Long id) {
+    public ResponseEntity<University> findById(Long id) {
         Optional<University> universityOptional = this.universityRepository.findById(id);
-        if (universityOptional.isPresent()) {
-            return universityOptional.get();
-        } else {
-            return null;
-        }
+        return ResponseEntity.ok(universityOptional.orElse(null));
     }
 
     @Override
@@ -37,7 +34,7 @@ public class UniversityServiceImpl implements UniversityService {
     }
 
     @Override
-    public List<University> findAll() {
-        return this.universityRepository.findAll();
+    public ResponseEntity<List<University>> findAll() {
+        return ResponseEntity.ok(this.universityRepository.findAll());
     }
 }

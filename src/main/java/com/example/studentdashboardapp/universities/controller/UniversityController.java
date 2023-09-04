@@ -2,6 +2,7 @@ package com.example.studentdashboardapp.universities.controller;
 
 import com.example.studentdashboardapp.universities.model.University;
 import com.example.studentdashboardapp.universities.service.UniversityService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,12 +18,12 @@ public class UniversityController {
     }
 
     @PostMapping()
-    public University createUniversity(@RequestBody University university) {
+    public ResponseEntity<University> createUniversity(@RequestBody University university) {
         return this.universityService.createUniversity(university);
     }
 
     @GetMapping("/{id}")
-    public University findById(@PathVariable("id") Long id) {
+    public ResponseEntity<University> findById(@PathVariable("id") Long id) {
         return this.universityService.findById(id);
     }
 
@@ -32,7 +33,7 @@ public class UniversityController {
     }
 
     @GetMapping()
-    public List<University> findAll() {
+    public ResponseEntity<List<University>> findAll() {
         return this.universityService.findAll();
     }
 }

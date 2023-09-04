@@ -2,9 +2,12 @@ package com.example.studentdashboardapp.students.service;
 
 import com.example.studentdashboardapp.students.model.Student;
 import com.example.studentdashboardapp.students.repository.StudentRepository;
+import org.springframework.expression.spel.ast.OpAnd;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -30,8 +33,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student findById(Long id) {
-        return this.studentRepository.findById(id).get();
+    public ResponseEntity<Student> findById(Long id) {
+        Optional<Student> optionalStudent = this.studentRepository.findById(id);
+        return ResponseEntity.ok(optionalStudent.orElse(null));
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.example.studentdashboardapp.appliactions.model;
 
-import com.example.studentdashboardapp.courses.model.Course;
 import lombok.Data;
 
 @Data

@@ -1,18 +1,20 @@
 package com.example.studentdashboardapp.courses.service;
 
+import com.example.studentdashboardapp.appliactions.model.Application;
 import com.example.studentdashboardapp.courses.model.Course;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface CourseService {
 
-    Course createCourse(Course course);
+    ResponseEntity<Course> createCourse(Course course);
 
-    Course findById(Long id);
+    ResponseEntity<Course> findById(Long id);
 
     void deleteById(Long id);
 
-    List<Course> findAll();
+    ResponseEntity<List<Course>> findAll();
 
-    List<Course> findAllByUniversityId(Long universityId);
+    ResponseEntity<?> findAllByUniversityId(String token, Long universityId);
 }

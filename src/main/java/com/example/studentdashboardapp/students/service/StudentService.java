@@ -9,7 +9,7 @@ public interface StudentService {
 
     ResponseEntity<?> registerStudent(Student student);
 
-    Student findById(Long id);
+    ResponseEntity<Student> findById(Long id);
 
     void deleteById(Long id);
 
