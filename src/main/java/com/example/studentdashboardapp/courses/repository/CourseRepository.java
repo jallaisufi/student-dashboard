@@ -11,7 +11,8 @@ import java.util.List;
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query(" from Course c " +
-            "left join Application a on a.course.id = c.id " +
-            "where c.university.id = :universityId and a.id is null")
-    List<Course> findAllByUniversityId(@Param("universityId") Long universityId);
+            "where not exists (select a.course from Application a " +
+            "where a.course.id = c.id and a.applyingStudent.id = :studentId) " +
+            "and c.university.id = :universityId")
+    List<Course> findAllByUniversityId(@Param("universityId") Long universityId, @Param("studentId") Long studentId);
 }

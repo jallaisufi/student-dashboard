@@ -1,6 +1,5 @@
 package com.example.studentdashboardapp.courses.controller;
 
-import com.example.studentdashboardapp.appliactions.model.Application;
 import com.example.studentdashboardapp.courses.model.Course;
 import com.example.studentdashboardapp.courses.service.CourseService;
 import org.springframework.http.ResponseEntity;

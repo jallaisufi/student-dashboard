@@ -47,7 +47,7 @@ public class CourseServiceImpl implements CourseService {
     public ResponseEntity<?> findAllByUniversityId(String token, Long universityId) {
         Student loggedInStudent = this.authenticationService.getLoggedInStudent(token);
         if (loggedInStudent != null) {
-            return ResponseEntity.ok(this.courseRepository.findAllByUniversityId(universityId));
+            return ResponseEntity.ok(this.courseRepository.findAllByUniversityId(universityId, loggedInStudent.getId()));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token not valid");
         }
